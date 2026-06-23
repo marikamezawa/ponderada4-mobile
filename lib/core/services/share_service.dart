@@ -15,22 +15,32 @@ class ShareService {
     required String? nextWateringDate,
     required String? photoUrl,
   }) async {
-    final text = '''
+    final text =
+        '''
 Minha planta: $name
-Especie: ${scientificName ?? 'Nao identificada'}
-Proxima rega: ${nextWateringDate ?? 'Nao agendada'}
+Espécie: ${scientificName ?? 'Não identificada'}
+Próxima rega: ${nextWateringDate ?? 'Não agendada'}
 Cadastrada no ReggieApp
-    '''.trim();
+    '''
+            .trim();
 
     try {
       if (photoUrl != null) {
-        final response = await _dio.get<List<int>>(
-          photoUrl,
-          options: Options(responseType: ResponseType.bytes),
-        );
-        final tempDir = await getTemporaryDirectory();
-        final file = File('${tempDir.path}/share_plant.jpg');
-        await file.writeAsBytes(response.data!);
+        final File file;
+        if (photoUrl.startsWith('http')) {
+          final response = await _dio.get<List<int>>(
+            photoUrl,
+            options: Options(responseType: ResponseType.bytes),
+          );
+          final tempDir = await getTemporaryDirectory();
+          file = File('${tempDir.path}/share_plant.jpg');
+          await file.writeAsBytes(response.data!);
+        } else {
+          file = File(photoUrl);
+          if (!await file.exists()) {
+            throw const FileSystemException('Foto não encontrada.');
+          }
+        }
         await Share.shareXFiles([XFile(file.path)], text: text);
       } else {
         await Share.share(text);

@@ -8,14 +8,12 @@ import 'plant_provider.dart';
 enum CareReminderType { water, fertilize }
 
 class CareReminder {
-  final String id;
   final String plantId;
   final String plantName;
   final CareReminderType type;
   final DateTime scheduledAt;
 
   const CareReminder({
-    required this.id,
     required this.plantId,
     required this.plantName,
     required this.type,
@@ -43,7 +41,6 @@ List<CareReminder> buildCareReminders(List<Plant> plants) {
     reminders
       ..add(
         CareReminder(
-          id: '${plant.id}_water',
           plantId: plant.id,
           plantName: plant.name,
           type: CareReminderType.water,
@@ -52,7 +49,6 @@ List<CareReminder> buildCareReminders(List<Plant> plants) {
       )
       ..add(
         CareReminder(
-          id: '${plant.id}_fertilize',
           plantId: plant.id,
           plantName: plant.name,
           type: CareReminderType.fertilize,

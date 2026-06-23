@@ -22,7 +22,6 @@ class AddPlantScreen extends ConsumerStatefulWidget {
 }
 
 class _AddPlantScreenState extends ConsumerState<AddPlantScreen> {
-  // Valores editáveis pelo usuário (preenchidos pela IA automaticamente)
   String? _name;
   String? _location;
   int _waterDays = 3;
@@ -64,7 +63,6 @@ class _AddPlantScreenState extends ConsumerState<AddPlantScreen> {
               _PhotoSection(image: addState.image, onPickImage: _pickImage),
               const SizedBox(height: 16),
 
-              // Loading / erro / card
               if (addState.isIdentifying)
                 _LoadingCard(label: 'Identificando planta com IA...'),
               if (!addState.isIdentifying &&
@@ -312,8 +310,6 @@ class _AddPlantScreenState extends ConsumerState<AddPlantScreen> {
   }
 }
 
-// ─── Seção da foto ─────────────────────────────────────────────────────────
-
 class _PhotoSection extends StatelessWidget {
   final File? image;
   final VoidCallback onPickImage;
@@ -411,8 +407,6 @@ class _PhotoSection extends StatelessWidget {
   }
 }
 
-// ─── Loading card ──────────────────────────────────────────────────────────
-
 class _LoadingCard extends StatelessWidget {
   final String label;
   const _LoadingCard({required this.label});
@@ -441,8 +435,6 @@ class _LoadingCard extends StatelessWidget {
     );
   }
 }
-
-// ─── Error card ────────────────────────────────────────────────────────────
 
 class _ErrorCard extends StatelessWidget {
   final String message;
@@ -485,8 +477,6 @@ class _ErrorCard extends StatelessWidget {
     );
   }
 }
-
-// ─── Album card ────────────────────────────────────────────────────────────
 
 class _PlantAlbumCard extends StatelessWidget {
   final String name;
@@ -533,7 +523,6 @@ class _PlantAlbumCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Badge "IA identificou"
             Row(
               children: [
                 Container(
@@ -583,7 +572,6 @@ class _PlantAlbumCard extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Nome + nome científico
             _EditableRow(
               onTap: onEditName,
               child: Column(
@@ -611,7 +599,6 @@ class _PlantAlbumCard extends StatelessWidget {
               ),
             ),
 
-            // Curiosidade / descrição
             if (description != null && description!.isNotEmpty) ...[
               const SizedBox(height: 16),
               Container(
@@ -673,7 +660,6 @@ class _PlantAlbumCard extends StatelessWidget {
             const Divider(height: 1),
             const SizedBox(height: 16),
 
-            // Linhas de cuidado
             if (isLoadingTips)
               _LoadingCard(label: 'A IA está preparando as informações...')
             else if (tipsError != null)
@@ -712,8 +698,6 @@ class _PlantAlbumCard extends StatelessWidget {
     );
   }
 }
-
-// ─── Banner de erro Gemini com retry ──────────────────────────────────────
 
 class _TipsErrorBanner extends StatelessWidget {
   final String message;
@@ -767,8 +751,6 @@ class _TipsErrorBanner extends StatelessWidget {
     );
   }
 }
-
-// ─── Linha de info editável ────────────────────────────────────────────────
 
 class _CareInfoRow extends StatelessWidget {
   final String icon;
@@ -831,8 +813,6 @@ class _CareInfoRow extends StatelessWidget {
     );
   }
 }
-
-// ─── Container editável (nome) ─────────────────────────────────────────────
 
 class _EditableRow extends StatelessWidget {
   final Widget child;

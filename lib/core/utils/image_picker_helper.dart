@@ -9,7 +9,8 @@ import '../constants/app_colors.dart';
 /// No desktop (Linux/Windows/macOS) abre o seletor de arquivos direto.
 /// No mobile mostra um bottom sheet com opções câmera / galeria.
 Future<File?> pickPlantImage(BuildContext context) async {
-  final isDesktop = !kIsWeb &&
+  final isDesktop =
+      !kIsWeb &&
       (defaultTargetPlatform == TargetPlatform.linux ||
           defaultTargetPlatform == TargetPlatform.windows ||
           defaultTargetPlatform == TargetPlatform.macOS);
@@ -18,7 +19,6 @@ Future<File?> pickPlantImage(BuildContext context) async {
     return _pick(ImageSource.gallery);
   }
 
-  // Mobile: pergunta câmera ou galeria
   final source = await showModalBottomSheet<ImageSource>(
     context: context,
     shape: const RoundedRectangleBorder(
@@ -34,8 +34,10 @@ Future<File?> pickPlantImage(BuildContext context) async {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-              content: Text(
-                  'Permissão de câmera negada. Habilite nas configurações.')),
+            content: Text(
+              'Permissão de câmera negada. Habilite nas configurações.',
+            ),
+          ),
         );
       }
       return null;
@@ -83,8 +85,11 @@ class _ImageSourceSheet extends StatelessWidget {
             ListTile(
               leading: const CircleAvatar(
                 backgroundColor: AppColors.primary,
-                child: Icon(Icons.camera_alt_outlined,
-                    color: Colors.white, size: 20),
+                child: Icon(
+                  Icons.camera_alt_outlined,
+                  color: Colors.white,
+                  size: 20,
+                ),
               ),
               title: const Text('Câmera'),
               subtitle: const Text('Tirar uma nova foto'),
@@ -93,8 +98,11 @@ class _ImageSourceSheet extends StatelessWidget {
             ListTile(
               leading: const CircleAvatar(
                 backgroundColor: AppColors.primaryLight,
-                child: Icon(Icons.photo_library_outlined,
-                    color: Colors.white, size: 20),
+                child: Icon(
+                  Icons.photo_library_outlined,
+                  color: Colors.white,
+                  size: 20,
+                ),
               ),
               title: const Text('Galeria'),
               subtitle: const Text('Escolher da galeria'),

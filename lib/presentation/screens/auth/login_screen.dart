@@ -30,10 +30,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future<void> _login() async {
     if (!_formKey.currentState!.validate()) return;
-    await ref.read(authNotifierProvider.notifier).login(
-          _emailController.text.trim(),
-          _passwordController.text,
-        );
+    await ref
+        .read(authNotifierProvider.notifier)
+        .login(_emailController.text.trim(), _passwordController.text);
     if (!mounted) return;
     final authState = ref.read(authNotifierProvider);
     authState.whenOrNull(
@@ -46,8 +45,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading =
-        ref.watch(authNotifierProvider).isLoading;
+    final isLoading = ref.watch(authNotifierProvider).isLoading;
 
     return LoadingOverlay(
       isLoading: isLoading,
@@ -64,12 +62,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   const SizedBox(height: 48),
                   const Icon(Icons.eco, size: 64, color: AppColors.primary),
                   const SizedBox(height: 16),
-                  Text('Bem-vindo ao ReggieApp',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineSmall
-                          ?.copyWith(fontWeight: FontWeight.bold)),
+                  Text(
+                    'Bem-vindo ao ReggieApp',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   const SizedBox(height: 40),
                   TextFormField(
                     controller: _emailController,
@@ -90,11 +89,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       labelText: AppStrings.password,
                       prefixIcon: const Icon(Icons.lock_outline),
                       suffixIcon: IconButton(
-                        icon: Icon(_obscurePassword
-                            ? Icons.visibility
-                            : Icons.visibility_off),
+                        icon: Icon(
+                          _obscurePassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
                         onPressed: () => setState(
-                            () => _obscurePassword = !_obscurePassword),
+                          () => _obscurePassword = !_obscurePassword,
+                        ),
                       ),
                     ),
                     validator: (v) => v == null || v.length < 6

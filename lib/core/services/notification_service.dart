@@ -9,7 +9,7 @@ class NotificationService {
   final FlutterLocalNotificationsPlugin _plugin =
       FlutterLocalNotificationsPlugin();
 
-  // Notificações não são suportadas em Linux/Windows desktop
+  // O plugin nativo é usado somente em Android e iOS.
   bool get _supported =>
       !kIsWeb &&
       (defaultTargetPlatform == TargetPlatform.android ||
@@ -32,7 +32,8 @@ class NotificationService {
     if (!_supported) return false;
     final android = _plugin
         .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>();
+          AndroidFlutterLocalNotificationsPlugin
+        >();
     final granted = await android?.requestNotificationsPermission();
     return granted ?? false;
   }
@@ -43,11 +44,11 @@ class NotificationService {
     required int frequencyDays,
   }) async {
     if (!_supported) return;
-    await _plugin.periodicallyShow(
+    await _plugin.periodicallyShowWithDuration(
       plantId.hashCode,
       'Hora de regar!',
       '$plantName está com sede. Não se esqueça!',
-      RepeatInterval.daily,
+      Duration(days: frequencyDays),
       const NotificationDetails(
         android: AndroidNotificationDetails(
           'care_reminders',
@@ -64,13 +65,14 @@ class NotificationService {
   Future<void> scheduleFertilizeReminder({
     required String plantId,
     required String plantName,
+    required int frequencyDays,
   }) async {
     if (!_supported) return;
-    await _plugin.periodicallyShow(
+    await _plugin.periodicallyShowWithDuration(
       '${plantId}_fertilize'.hashCode,
       'Hora de adubar!',
-      '$plantName precisa de nutrientes este mês.',
-      RepeatInterval.weekly,
+      '$plantName precisa de nutrientes. Hora de adubar.',
+      Duration(days: frequencyDays),
       const NotificationDetails(
         android: AndroidNotificationDetails(
           'care_reminders',

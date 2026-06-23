@@ -50,7 +50,6 @@ class PlantRepositoryImpl implements PlantRepository {
 
   @override
   Future<void> deletePlant(String id) async {
-    // Apaga a foto local, se existir
     final plant = await _datasource.getPlantById(id);
     if (plant.photoUrl != null && !plant.photoUrl!.startsWith('http')) {
       final f = File(plant.photoUrl!);

@@ -22,23 +22,21 @@ class GrowthHistoryScreen extends ConsumerWidget {
     final logsAsync = ref.watch(growthLogProvider(plantId));
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Evolução de $plantName'),
-      ),
+      appBar: AppBar(title: Text('Evolução de $plantName')),
       body: logsAsync.when(
-        loading: () =>
-            const Center(child: CircularProgressIndicator()),
+        loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(
-          child: Text(e.toString(),
-              style: const TextStyle(color: AppColors.error)),
+          child: Text(
+            e.toString(),
+            style: const TextStyle(color: AppColors.error),
+          ),
         ),
         data: (logs) {
           if (logs.isEmpty) {
             return const _EmptyState();
           }
           return ListView.builder(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 16, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
             itemCount: logs.length,
             itemBuilder: (context, index) {
               final isLast = index == logs.length - 1;
@@ -55,13 +53,15 @@ class GrowthHistoryScreen extends ConsumerWidget {
   }
 
   Future<void> _confirmDelete(
-      BuildContext context, WidgetRef ref, GrowthLog log) async {
+    BuildContext context,
+    WidgetRef ref,
+    GrowthLog log,
+  ) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
         title: const Text('Remover foto'),
-        content:
-            const Text('Deseja remover esta foto da linha do tempo?'),
+        content: const Text('Deseja remover esta foto da linha do tempo?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
@@ -69,8 +69,7 @@ class GrowthHistoryScreen extends ConsumerWidget {
           ),
           FilledButton(
             onPressed: () => Navigator.pop(context, true),
-            style:
-                FilledButton.styleFrom(backgroundColor: AppColors.error),
+            style: FilledButton.styleFrom(backgroundColor: AppColors.error),
             child: const Text('Remover'),
           ),
         ],
@@ -78,16 +77,12 @@ class GrowthHistoryScreen extends ConsumerWidget {
     );
     if (confirmed != true) return;
     try {
-      await ref
-          .read(growthLogProvider(plantId).notifier)
-          .removeLog(log.id);
+      await ref.read(growthLogProvider(plantId).notifier).removeLog(log.id);
     } catch (e) {
       if (context.mounted) showErrorSnackbar(context, e.toString());
     }
   }
 }
-
-// ─── Item da timeline ──────────────────────────────────────────────────────
 
 class _TimelineItem extends StatelessWidget {
   final GrowthLog log;
@@ -102,14 +97,15 @@ class _TimelineItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dateLabel =
-        DateFormat("d MMM yyyy • HH:mm", 'pt_BR').format(log.loggedAt);
+    final dateLabel = DateFormat(
+      "d MMM yyyy • HH:mm",
+      'pt_BR',
+    ).format(log.loggedAt);
 
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Coluna do eixo da timeline
           SizedBox(
             width: 32,
             child: Column(
@@ -123,30 +119,26 @@ class _TimelineItem extends StatelessWidget {
                   ),
                 ),
                 if (!isLast)
-                  Expanded(
-                    child: Container(
-                      width: 2,
-                      color: AppColors.accent,
-                    ),
-                  ),
+                  Expanded(child: Container(width: 2, color: AppColors.accent)),
               ],
             ),
           ),
           const SizedBox(width: 12),
-          // Conteúdo do item
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(bottom: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(dateLabel,
-                      style: const TextStyle(
-                          fontSize: 12,
-                          color: AppColors.textSecondary,
-                          fontWeight: FontWeight.w500)),
+                  Text(
+                    dateLabel,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppColors.textSecondary,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                   const SizedBox(height: 8),
-                  // Foto com gesto de toque para tela cheia
                   GestureDetector(
                     onTap: () => _openFullScreen(context, log.photoPath),
                     child: ClipRRect(
@@ -160,8 +152,11 @@ class _TimelineItem extends StatelessWidget {
                           height: 220,
                           color: AppColors.accent.withValues(alpha: 0.3),
                           child: const Center(
-                            child: Icon(Icons.broken_image_outlined,
-                                color: AppColors.textSecondary, size: 40),
+                            child: Icon(
+                              Icons.broken_image_outlined,
+                              color: AppColors.textSecondary,
+                              size: 40,
+                            ),
                           ),
                         ),
                       ),
@@ -172,15 +167,19 @@ class _TimelineItem extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Icon(Icons.notes_outlined,
-                            size: 14, color: AppColors.textSecondary),
+                        const Icon(
+                          Icons.notes_outlined,
+                          size: 14,
+                          color: AppColors.textSecondary,
+                        ),
                         const SizedBox(width: 6),
                         Expanded(
                           child: Text(
                             log.note!,
                             style: const TextStyle(
-                                fontSize: 13,
-                                color: AppColors.textSecondary),
+                              fontSize: 13,
+                              color: AppColors.textSecondary,
+                            ),
                           ),
                         ),
                       ],
@@ -190,8 +189,11 @@ class _TimelineItem extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: IconButton(
                       onPressed: onDelete,
-                      icon: const Icon(Icons.delete_outline,
-                          size: 18, color: AppColors.textSecondary),
+                      icon: const Icon(
+                        Icons.delete_outline,
+                        size: 18,
+                        color: AppColors.textSecondary,
+                      ),
                       tooltip: 'Remover',
                       visualDensity: VisualDensity.compact,
                     ),
@@ -215,8 +217,6 @@ class _TimelineItem extends StatelessWidget {
   }
 }
 
-// ─── Foto em tela cheia ────────────────────────────────────────────────────
-
 class _FullScreenPhoto extends StatelessWidget {
   final String photoPath;
 
@@ -235,17 +235,12 @@ class _FullScreenPhoto extends StatelessWidget {
         child: InteractiveViewer(
           minScale: 0.5,
           maxScale: 4.0,
-          child: Image.file(
-            File(photoPath),
-            fit: BoxFit.contain,
-          ),
+          child: Image.file(File(photoPath), fit: BoxFit.contain),
         ),
       ),
     );
   }
 }
-
-// ─── Estado vazio ─────────────────────────────────────────────────────────
 
 class _EmptyState extends StatelessWidget {
   const _EmptyState();
@@ -256,15 +251,15 @@ class _EmptyState extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.photo_library_outlined,
-              size: 72, color: AppColors.accent),
+          Icon(Icons.photo_library_outlined, size: 72, color: AppColors.accent),
           SizedBox(height: 16),
           Text(
             'Nenhuma foto registrada',
             style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary),
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
+            ),
           ),
           SizedBox(height: 8),
           Text(

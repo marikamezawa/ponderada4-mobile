@@ -19,7 +19,6 @@ import 'presentation/screens/notifications/notifications_screen.dart';
 
 final _router = GoRouter(
   initialLocation: AppRoutes.splash,
-  // Reconfigura o router sempre que o estado de auth muda
   refreshListenable: authState,
   redirect: (context, state) {
     final isLoggedIn = authState.value;

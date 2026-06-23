@@ -15,8 +15,7 @@ class CareLogRepositoryImpl implements CareLogRepository {
       _datasource.getPlantCareLogs(plantId);
 
   @override
-  Future<int> countByUser(String userId) =>
-      _datasource.countByUser(userId);
+  Future<int> countByUser(String userId) => _datasource.countByUser(userId);
 
   @override
   Future<CareLog> addCareLog(CareLog log) async {
@@ -34,6 +33,5 @@ class CareLogRepositoryImpl implements CareLogRepository {
   }
 
   @override
-  Future<void> deleteCareLog(String id) =>
-      _datasource.deleteCareLog(id);
+  Future<void> deleteCareLog(String id) => _datasource.deleteCareLog(id);
 }

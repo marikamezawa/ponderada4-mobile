@@ -32,18 +32,22 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   Future<void> _register() async {
     if (!_formKey.currentState!.validate()) return;
-    await ref.read(authNotifierProvider.notifier).register(
+    await ref
+        .read(authNotifierProvider.notifier)
+        .register(
           _nameController.text.trim(),
           _emailController.text.trim(),
           _passwordController.text,
         );
     if (!mounted) return;
-    ref.read(authNotifierProvider).whenOrNull(
-      error: (e, _) => showErrorSnackbar(context, e.toString()),
-      data: (user) {
-        if (user != null) context.go(AppRoutes.home);
-      },
-    );
+    ref
+        .read(authNotifierProvider)
+        .whenOrNull(
+          error: (e, _) => showErrorSnackbar(context, e.toString()),
+          data: (user) {
+            if (user != null) context.go(AppRoutes.home);
+          },
+        );
   }
 
   @override

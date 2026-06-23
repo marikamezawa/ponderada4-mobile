@@ -21,8 +21,7 @@ class SqlitePlantDatasource {
   Future<PlantModel> getPlantById(String id) async {
     try {
       final db = await LocalDatabase.instance.database;
-      final rows =
-          await db.query('plants', where: 'id = ?', whereArgs: [id]);
+      final rows = await db.query('plants', where: 'id = ?', whereArgs: [id]);
       if (rows.isEmpty) throw AppException('Planta não encontrada.');
       return PlantModel.fromJson(rows.first);
     } catch (e) {
@@ -40,8 +39,7 @@ class SqlitePlantDatasource {
     }
   }
 
-  Future<PlantModel> updatePlant(
-      String id, Map<String, dynamic> data) async {
+  Future<PlantModel> updatePlant(String id, Map<String, dynamic> data) async {
     try {
       final db = await LocalDatabase.instance.database;
       await db.update('plants', data, where: 'id = ?', whereArgs: [id]);

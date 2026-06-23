@@ -21,7 +21,6 @@ class PlantImage extends StatelessWidget {
   Widget build(BuildContext context) {
     if (url == null) return _placeholder();
 
-    // Foto local: path absoluto que não começa com http
     if (!url!.startsWith('http')) {
       return Image.file(
         File(url!),
@@ -43,9 +42,9 @@ class PlantImage extends StatelessWidget {
   }
 
   Widget _placeholder() => Container(
-        height: height,
-        width: width,
-        color: AppColors.accent,
-        child: const Icon(Icons.eco, size: 48, color: AppColors.primary),
-      );
+    height: height,
+    width: width,
+    color: AppColors.accent,
+    child: const Icon(Icons.eco, size: 48, color: AppColors.primary),
+  );
 }

@@ -40,8 +40,9 @@ class _SuggestionTile extends StatelessWidget {
     final confidence = (suggestion.probability * 100).toStringAsFixed(0);
     final isHigh = suggestion.probability >= 0.7;
     final isMid = suggestion.probability >= 0.3;
-    final confColor =
-        isHigh ? AppColors.primary : (isMid ? AppColors.warning : AppColors.error);
+    final confColor = isHigh
+        ? AppColors.primary
+        : (isMid ? AppColors.warning : AppColors.error);
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -61,26 +62,19 @@ class _SuggestionTile extends StatelessWidget {
                     Text(
                       suggestion.commonName ?? suggestion.name,
                       style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 15),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
                     ),
                     if (suggestion.commonName != null) ...[
                       const SizedBox(height: 2),
                       Text(
                         suggestion.name,
                         style: const TextStyle(
-                            fontStyle: FontStyle.italic,
-                            color: AppColors.textSecondary,
-                            fontSize: 12),
-                      ),
-                    ],
-                    if (suggestion.description != null) ...[
-                      const SizedBox(height: 6),
-                      Text(
-                        suggestion.description!,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                            fontSize: 12, color: AppColors.textSecondary),
+                          fontStyle: FontStyle.italic,
+                          color: AppColors.textSecondary,
+                          fontSize: 12,
+                        ),
                       ),
                     ],
                   ],
@@ -91,7 +85,9 @@ class _SuggestionTile extends StatelessWidget {
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 8, vertical: 4),
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: confColor.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(12),
@@ -99,14 +95,18 @@ class _SuggestionTile extends StatelessWidget {
                     child: Text(
                       '$confidence%',
                       style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: confColor),
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: confColor,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 4),
-                  Icon(Icons.chevron_right,
-                      color: AppColors.textSecondary, size: 18),
+                  Icon(
+                    Icons.chevron_right,
+                    color: AppColors.textSecondary,
+                    size: 18,
+                  ),
                 ],
               ),
             ],
@@ -141,7 +141,7 @@ class _ThumbnailOrIcon extends StatelessWidget {
   }
 
   Widget _placeholder() => Container(
-        color: AppColors.accent,
-        child: const Icon(Icons.eco, color: AppColors.primary),
-      );
+    color: AppColors.accent,
+    child: const Icon(Icons.eco, color: AppColors.primary),
+  );
 }

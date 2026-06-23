@@ -64,7 +64,6 @@ class AddPlantNotifier extends AutoDisposeNotifier<AddPlantState> {
   Future<void> identify() async {
     if (state.image == null) return;
 
-    // 1. PlantNet
     state = state.copyWith(isIdentifying: true);
     PlantIdResponseModel? result;
     try {
@@ -78,7 +77,6 @@ class AddPlantNotifier extends AutoDisposeNotifier<AddPlantState> {
       return;
     }
 
-    // 2. Gemini
     final best = result.bestMatch;
     if (best == null) return;
     await _fetchTips(scientificName: best.name, commonName: best.commonName);

@@ -10,18 +10,18 @@ class GrowthLogModel extends GrowthLog {
   });
 
   factory GrowthLogModel.fromJson(Map<String, dynamic> json) => GrowthLogModel(
-        id: json['id'] as String,
-        plantId: json['plant_id'] as String,
-        photoPath: json['photo_path'] as String,
-        note: json['note'] as String?,
-        loggedAt: DateTime.parse(json['logged_at'] as String),
-      );
+    id: json['id'] as String,
+    plantId: json['plant_id'] as String,
+    photoPath: json['photo_path'] as String,
+    note: json['note'] as String?,
+    loggedAt: DateTime.parse(json['logged_at'] as String),
+  );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'plant_id': plantId,
-        'photo_path': photoPath,
-        'note': note,
-        'logged_at': loggedAt.toIso8601String(),
-      };
+    'id': id,
+    'plant_id': plantId,
+    'photo_path': photoPath,
+    'note': note,
+    'logged_at': loggedAt.toIso8601String(),
+  };
 }

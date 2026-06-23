@@ -15,8 +15,7 @@ class PlantCareInfo {
 
   factory PlantCareInfo.fromJson(Map<String, dynamic> json) {
     return PlantCareInfo(
-      waterFrequencyDays:
-          (json['water_frequency_days'] as num?)?.toInt() ?? 3,
+      waterFrequencyDays: (json['water_frequency_days'] as num?)?.toInt() ?? 3,
       fertilizeFrequencyDays:
           (json['fertilize_frequency_days'] as num?)?.toInt() ?? 30,
       suggestedLocation: json['suggested_location'] as String?,

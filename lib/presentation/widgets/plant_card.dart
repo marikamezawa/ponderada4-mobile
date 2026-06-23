@@ -27,7 +27,6 @@ class PlantCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Foto com menu ⋮ sobreposto
             Stack(
               children: [
                 PlantImage(
@@ -43,8 +42,11 @@ class PlantCard extends StatelessWidget {
                       color: Colors.black38,
                       shape: const CircleBorder(),
                       child: PopupMenuButton<String>(
-                        icon: const Icon(Icons.more_vert,
-                            color: Colors.white, size: 18),
+                        icon: const Icon(
+                          Icons.more_vert,
+                          color: Colors.white,
+                          size: 18,
+                        ),
                         padding: EdgeInsets.zero,
                         onSelected: (value) {
                           if (value == 'delete') _confirmDelete(context);
@@ -54,11 +56,16 @@ class PlantCard extends StatelessWidget {
                             value: 'delete',
                             child: Row(
                               children: [
-                                Icon(Icons.delete_outline,
-                                    color: AppColors.error, size: 18),
+                                Icon(
+                                  Icons.delete_outline,
+                                  color: AppColors.error,
+                                  size: 18,
+                                ),
                                 SizedBox(width: 8),
-                                Text('Apagar planta',
-                                    style: TextStyle(color: AppColors.error)),
+                                Text(
+                                  'Apagar planta',
+                                  style: TextStyle(color: AppColors.error),
+                                ),
                               ],
                             ),
                           ),
@@ -68,7 +75,6 @@ class PlantCard extends StatelessWidget {
                   ),
               ],
             ),
-            // Informações
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
               child: Column(
@@ -77,7 +83,9 @@ class PlantCard extends StatelessWidget {
                   Text(
                     plant.name,
                     style: const TextStyle(
-                        fontWeight: FontWeight.w700, fontSize: 13),
+                      fontWeight: FontWeight.w700,
+                      fontSize: 13,
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -86,9 +94,10 @@ class PlantCard extends StatelessWidget {
                     Text(
                       plant.scientificName!,
                       style: const TextStyle(
-                          fontSize: 10,
-                          fontStyle: FontStyle.italic,
-                          color: AppColors.textSecondary),
+                        fontSize: 10,
+                        fontStyle: FontStyle.italic,
+                        color: AppColors.textSecondary,
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -110,7 +119,8 @@ class PlantCard extends StatelessWidget {
       builder: (_) => AlertDialog(
         title: const Text('Apagar planta'),
         content: Text(
-            'Deseja apagar "${plant.name}"? Esta ação não pode ser desfeita.'),
+          'Deseja apagar "${plant.name}"? Esta ação não pode ser desfeita.',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
@@ -118,8 +128,7 @@ class PlantCard extends StatelessWidget {
           ),
           FilledButton(
             onPressed: () => Navigator.pop(context, true),
-            style:
-                FilledButton.styleFrom(backgroundColor: AppColors.error),
+            style: FilledButton.styleFrom(backgroundColor: AppColors.error),
             child: const Text('Apagar'),
           ),
         ],
@@ -140,13 +149,13 @@ class _WaterBadge extends StatelessWidget {
     final color = overdue
         ? AppColors.error
         : daysUntil <= 1
-            ? AppColors.warning
-            : AppColors.primaryLight;
+        ? AppColors.warning
+        : AppColors.primaryLight;
     final label = overdue
         ? '💧 Regar agora!'
         : daysUntil == 0
-            ? '💧 Regar hoje'
-            : '💧 Em ${daysUntil}d';
+        ? '💧 Regar hoje'
+        : '💧 Em ${daysUntil}d';
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
@@ -155,9 +164,14 @@ class _WaterBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: color.withValues(alpha: 0.5), width: 0.5),
       ),
-      child: Text(label,
-          style: TextStyle(
-              fontSize: 10, color: color, fontWeight: FontWeight.w600)),
+      child: Text(
+        label,
+        style: TextStyle(
+          fontSize: 10,
+          color: color,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
     );
   }
 }

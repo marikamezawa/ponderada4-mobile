@@ -14,7 +14,10 @@ class LocalAuthDatasource {
       sha256.convert(utf8.encode(password)).toString();
 
   Future<UserProfile> register(
-      String name, String email, String password) async {
+    String name,
+    String email,
+    String password,
+  ) async {
     final db = await LocalDatabase.instance.database;
 
     final existing = await db.query(
@@ -37,8 +40,7 @@ class LocalAuthDatasource {
       'created_at': now.toIso8601String(),
     });
 
-    final user =
-        UserProfile(id: id, name: name, email: email, createdAt: now);
+    final user = UserProfile(id: id, name: name, email: email, createdAt: now);
     await _persist(user);
     return user;
   }
@@ -84,11 +86,11 @@ class LocalAuthDatasource {
   }
 
   UserProfile _rowToProfile(Map<String, Object?> row) => UserProfile(
-        id: row['id'] as String,
-        name: row['name'] as String,
-        email: row['email'] as String,
-        createdAt: DateTime.parse(row['created_at'] as String),
-      );
+    id: row['id'] as String,
+    name: row['name'] as String,
+    email: row['email'] as String,
+    createdAt: DateTime.parse(row['created_at'] as String),
+  );
 
   UserProfile _jsonToProfile(String json) {
     final m = jsonDecode(json) as Map<String, dynamic>;

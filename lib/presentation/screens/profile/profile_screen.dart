@@ -57,9 +57,7 @@ class ProfileScreen extends ConsumerWidget {
                 onPressed: () => _confirmLogout(context, ref),
                 icon: const Icon(Icons.logout),
                 label: const Text('Sair da conta'),
-                style: FilledButton.styleFrom(
-                  backgroundColor: AppColors.error,
-                ),
+                style: FilledButton.styleFrom(backgroundColor: AppColors.error),
               ),
             ],
           );
@@ -122,14 +120,14 @@ class _AvatarSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 12),
-        Text(name,
-            style: Theme.of(context)
-                .textTheme
-                .titleLarge
-                ?.copyWith(fontWeight: FontWeight.bold)),
+        Text(
+          name,
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 4),
-        Text(email,
-            style: const TextStyle(color: AppColors.textSecondary)),
+        Text(email, style: const TextStyle(color: AppColors.textSecondary)),
       ],
     );
   }
@@ -145,9 +143,13 @@ class _StatsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(child: _StatCard(value: plantCount, label: 'Plantas')),
+        Expanded(
+          child: _StatCard(value: plantCount, label: 'Plantas'),
+        ),
         const SizedBox(width: 16),
-        Expanded(child: _StatCard(value: careCount, label: 'Cuidados')),
+        Expanded(
+          child: _StatCard(value: careCount, label: 'Cuidados'),
+        ),
       ],
     );
   }
@@ -166,15 +168,15 @@ class _StatCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: Column(
           children: [
-            Text('$value',
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primary,
-                    )),
+            Text(
+              '$value',
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: AppColors.primary,
+              ),
+            ),
             const SizedBox(height: 4),
-            Text(label,
-                style:
-                    const TextStyle(color: AppColors.textSecondary)),
+            Text(label, style: const TextStyle(color: AppColors.textSecondary)),
           ],
         ),
       ),
@@ -207,7 +209,9 @@ class _SettingsSection extends StatelessWidget {
           notificationsEnabled
               ? Icons.notifications_active
               : Icons.notifications_off_outlined,
-          color: notificationsEnabled ? AppColors.primary : AppColors.textSecondary,
+          color: notificationsEnabled
+              ? AppColors.primary
+              : AppColors.textSecondary,
         ),
       ),
     );

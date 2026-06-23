@@ -39,9 +39,7 @@ class GrowthLogRepositoryImpl implements GrowthLogRepository {
 
   @override
   Future<void> deleteGrowthLog(String id) async {
-    // Apaga foto local antes de remover do banco
-    final logs = await _datasource.getPlantGrowthLogs('');
-    final log = logs.where((l) => l.id == id).firstOrNull;
+    final log = await _datasource.getGrowthLogById(id);
     if (log != null) {
       final f = File(log.photoPath);
       if (await f.exists()) await f.delete();
@@ -50,11 +48,13 @@ class GrowthLogRepositoryImpl implements GrowthLogRepository {
   }
 
   Future<String> _savePhotoLocally(
-      String plantId, String logId, File file) async {
+    String plantId,
+    String logId,
+    File file,
+  ) async {
     try {
       final dir = await getApplicationDocumentsDirectory();
-      final photoDir =
-          Directory(p.join(dir.path, 'growth_photos', plantId));
+      final photoDir = Directory(p.join(dir.path, 'growth_photos', plantId));
       await photoDir.create(recursive: true);
       final dest = File(p.join(photoDir.path, '$logId.jpg'));
       await file.copy(dest.path);

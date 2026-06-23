@@ -2,14 +2,12 @@ class PlantIdSuggestion {
   final String name;
   final double probability;
   final String? commonName;
-  final String? description;
   final String? imageUrl;
 
   const PlantIdSuggestion({
     required this.name,
     required this.probability,
     this.commonName,
-    this.description,
     this.imageUrl,
   });
 
@@ -17,8 +15,9 @@ class PlantIdSuggestion {
     final species = json['species'] as Map<String, dynamic>?;
     final commonNames = species?['commonNames'] as List?;
     final images = json['images'] as List?;
-    final firstImage =
-        images != null && images.isNotEmpty ? images.first as Map<String, dynamic>? : null;
+    final firstImage = images != null && images.isNotEmpty
+        ? images.first as Map<String, dynamic>?
+        : null;
     final urls = firstImage?['url'] as Map<String, dynamic>?;
 
     return PlantIdSuggestion(
@@ -27,7 +26,6 @@ class PlantIdSuggestion {
       commonName: commonNames != null && commonNames.isNotEmpty
           ? commonNames.first as String?
           : null,
-      description: null,
       imageUrl: urls?['m'] as String?,
     );
   }
@@ -35,29 +33,18 @@ class PlantIdSuggestion {
 
 class PlantIdResponseModel {
   final List<PlantIdSuggestion> suggestions;
-  final bool isPlant;
-
-  const PlantIdResponseModel({
-    required this.suggestions,
-    required this.isPlant,
-  });
+  const PlantIdResponseModel({required this.suggestions});
 
   PlantIdSuggestion? get bestMatch =>
       suggestions.isNotEmpty ? suggestions.first : null;
 
-  bool get hasLowConfidence =>
-      bestMatch == null || bestMatch!.probability < 0.3;
-
   factory PlantIdResponseModel.fromJson(Map<String, dynamic> json) {
-    final results = (json['results'] as List?)
-            ?.map((e) =>
-                PlantIdSuggestion.fromJson(e as Map<String, dynamic>))
+    final results =
+        (json['results'] as List?)
+            ?.map((e) => PlantIdSuggestion.fromJson(e as Map<String, dynamic>))
             .toList() ??
         [];
 
-    return PlantIdResponseModel(
-      suggestions: results,
-      isPlant: results.isNotEmpty,
-    );
+    return PlantIdResponseModel(suggestions: results);
   }
 }

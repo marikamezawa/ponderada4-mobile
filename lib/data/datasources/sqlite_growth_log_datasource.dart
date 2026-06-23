@@ -3,6 +3,21 @@ import '../models/growth_log_model.dart';
 import 'local_database.dart';
 
 class SqliteGrowthLogDatasource {
+  Future<GrowthLogModel?> getGrowthLogById(String id) async {
+    try {
+      final db = await LocalDatabase.instance.database;
+      final rows = await db.query(
+        'growth_logs',
+        where: 'id = ?',
+        whereArgs: [id],
+        limit: 1,
+      );
+      return rows.isEmpty ? null : GrowthLogModel.fromJson(rows.first);
+    } catch (e) {
+      throw AppException('Erro ao buscar registro de evolução: $e');
+    }
+  }
+
   Future<List<GrowthLogModel>> getPlantGrowthLogs(String plantId) async {
     try {
       final db = await LocalDatabase.instance.database;

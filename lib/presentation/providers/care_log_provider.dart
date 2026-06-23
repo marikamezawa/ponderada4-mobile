@@ -6,8 +6,9 @@ import '../../domain/repositories/care_log_repository.dart';
 import '../../domain/usecases/schedule_care_usecase.dart';
 import 'plant_provider.dart';
 
-final sqliteCareLogDatasourceProvider =
-    Provider<SqliteCareLogDatasource>((ref) {
+final sqliteCareLogDatasourceProvider = Provider<SqliteCareLogDatasource>((
+  ref,
+) {
   return SqliteCareLogDatasource();
 });
 
@@ -39,4 +40,5 @@ class CareLogNotifier extends FamilyAsyncNotifier<List<CareLog>, String> {
 
 final careLogNotifierProvider =
     AsyncNotifierProvider.family<CareLogNotifier, List<CareLog>, String>(
-        () => CareLogNotifier());
+      () => CareLogNotifier(),
+    );

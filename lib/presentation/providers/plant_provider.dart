@@ -49,10 +49,9 @@ class PlantListNotifier extends AsyncNotifier<List<Plant>> {
   }
 
   Future<void> addPlant(Plant plant, {File? imageFile}) async {
-    final saved = await ref.read(savePlantUsecaseProvider).call(
-          plant,
-          imageFile: imageFile,
-        );
+    final saved = await ref
+        .read(savePlantUsecaseProvider)
+        .call(plant, imageFile: imageFile);
     state.whenData((plants) {
       state = AsyncData([saved, ...plants]);
     });
@@ -60,17 +59,20 @@ class PlantListNotifier extends AsyncNotifier<List<Plant>> {
 
   Future<void> removePlant(String id) async {
     await ref.read(plantRepositoryProvider).deletePlant(id);
+    await NotificationService().cancelReminder(id);
     state.whenData((plants) {
       state = AsyncData(plants.where((p) => p.id != id).toList());
     });
   }
 }
 
-final plantListProvider =
-    AsyncNotifierProvider<PlantListNotifier, List<Plant>>(
-        () => PlantListNotifier());
+final plantListProvider = AsyncNotifierProvider<PlantListNotifier, List<Plant>>(
+  () => PlantListNotifier(),
+);
 
-final plantDetailProvider =
-    FutureProvider.family<Plant, String>((ref, id) async {
+final plantDetailProvider = FutureProvider.family<Plant, String>((
+  ref,
+  id,
+) async {
   return ref.watch(plantRepositoryProvider).getPlantById(id);
 });

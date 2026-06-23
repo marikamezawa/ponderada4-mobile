@@ -95,8 +95,7 @@ class LocalDatabase {
       ''');
     }
     if (oldVersion < 4) {
-      await db.execute(
-          'ALTER TABLE plants ADD COLUMN description TEXT');
+      await db.execute('ALTER TABLE plants ADD COLUMN description TEXT');
     }
   }
 }

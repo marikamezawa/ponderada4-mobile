@@ -21,10 +21,7 @@ class PlantIdApiDatasource {
 
       final response = await _dio.post<Map<String, dynamic>>(
         'https://my-api.plantnet.org/v2/identify/all',
-        queryParameters: {
-          'api-key': Env.plantNetApiKey,
-          'lang': 'pt',
-        },
+        queryParameters: {'api-key': Env.plantNetApiKey, 'lang': 'pt'},
         data: formData,
         options: Options(
           sendTimeout: const Duration(seconds: 30),
@@ -37,14 +34,14 @@ class PlantIdApiDatasource {
       if (e.type == DioExceptionType.connectionTimeout ||
           e.type == DioExceptionType.receiveTimeout) {
         throw const PlantIdException(
-            'Tempo esgotado. Tente outra foto ou cadastre manualmente.');
+          'Tempo esgotado. Tente outra foto ou cadastre manualmente.',
+        );
       }
       if (e.type == DioExceptionType.connectionError) {
         throw const NetworkException();
       }
       if (e.response?.statusCode == 404) {
-        // PlantNet returns 404 when no plant is found
-        return const PlantIdResponseModel(suggestions: [], isPlant: false);
+        return const PlantIdResponseModel(suggestions: []);
       }
       throw const PlantIdException();
     }

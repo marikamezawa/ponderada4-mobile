@@ -19,6 +19,7 @@ class SavePlantUsecase {
     await _notifications.scheduleFertilizeReminder(
       plantId: saved.id,
       plantName: saved.name,
+      frequencyDays: saved.fertilizeFrequencyDays,
     );
     return saved;
   }

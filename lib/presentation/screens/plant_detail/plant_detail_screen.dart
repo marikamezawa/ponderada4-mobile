@@ -30,17 +30,13 @@ class PlantDetailScreen extends ConsumerWidget {
     final logsAsync = ref.watch(careLogNotifierProvider(plantId));
 
     return plantAsync.when(
-      loading: () => const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      ),
+      loading: () =>
+          const Scaffold(body: Center(child: CircularProgressIndicator())),
       error: (e, _) => Scaffold(
         appBar: AppBar(),
         body: Center(child: Text(e.toString())),
       ),
-      data: (plant) => _PlantDetailContent(
-        plant: plant,
-        logsAsync: logsAsync,
-      ),
+      data: (plant) => _PlantDetailContent(plant: plant, logsAsync: logsAsync),
     );
   }
 }
@@ -88,13 +84,14 @@ class _PlantDetailContentState extends ConsumerState<_PlantDetailContent> {
                       Expanded(
                         child: OutlinedButton.icon(
                           onPressed: () => _registerGrowthPhoto(plant),
-                          icon: const Icon(Icons.add_a_photo_outlined,
-                              size: 18),
+                          icon: const Icon(
+                            Icons.add_a_photo_outlined,
+                            size: 18,
+                          ),
                           label: const Text('Registrar evolução'),
                           style: OutlinedButton.styleFrom(
                             foregroundColor: AppColors.primary,
-                            side: const BorderSide(
-                                color: AppColors.primary),
+                            side: const BorderSide(color: AppColors.primary),
                           ),
                         ),
                       ),
@@ -104,13 +101,16 @@ class _PlantDetailContentState extends ConsumerState<_PlantDetailContent> {
                           onPressed: () => context.push(
                             '${AppRoutes.growthHistoryPath(plant.id)}?name=${Uri.encodeComponent(plant.name)}',
                           ),
-                          icon: const Icon(Icons.photo_library_outlined,
-                              size: 18),
+                          icon: const Icon(
+                            Icons.photo_library_outlined,
+                            size: 18,
+                          ),
                           label: const Text('Ver evolução 📸'),
                           style: OutlinedButton.styleFrom(
                             foregroundColor: AppColors.primaryLight,
                             side: const BorderSide(
-                                color: AppColors.primaryLight),
+                              color: AppColors.primaryLight,
+                            ),
                           ),
                         ),
                       ),
@@ -191,7 +191,6 @@ class _PlantDetailContentState extends ConsumerState<_PlantDetailContent> {
     final file = await pickPlantImage(context);
     if (file == null || !mounted) return;
 
-    // Pede nota opcional
     final note = await showModalBottomSheet<String>(
       context: context,
       isScrollControlled: true,
@@ -225,15 +224,17 @@ class _PlantAppBar extends StatelessWidget {
   final VoidCallback onShare;
   final VoidCallback onDelete;
 
-  const _PlantAppBar(
-      {required this.plant, required this.onShare, required this.onDelete});
+  const _PlantAppBar({
+    required this.plant,
+    required this.onShare,
+    required this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
       expandedHeight: 260,
       pinned: true,
-      // Quando recolhido: fundo verde escuro com ícones brancos
       backgroundColor: AppColors.primary,
       foregroundColor: Colors.white,
       iconTheme: const IconThemeData(color: Colors.white),
@@ -261,7 +262,6 @@ class _PlantAppBar extends StatelessWidget {
               height: 260,
               width: double.infinity,
             ),
-            // Gradiente escuro no topo para os ícones ficarem legíveis
             const DecoratedBox(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -322,28 +322,36 @@ class _PlantInfoSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(plant.name,
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall
-                ?.copyWith(fontWeight: FontWeight.bold)),
+        Text(
+          plant.name,
+          style: Theme.of(
+            context,
+          ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+        ),
         if (plant.scientificName != null) ...[
           const SizedBox(height: 4),
-          Text(plant.scientificName!,
-              style: const TextStyle(
-                  fontStyle: FontStyle.italic,
-                  color: AppColors.textSecondary)),
+          Text(
+            plant.scientificName!,
+            style: const TextStyle(
+              fontStyle: FontStyle.italic,
+              color: AppColors.textSecondary,
+            ),
+          ),
         ],
         if (plant.location != null) ...[
           const SizedBox(height: 8),
           Row(
             children: [
-              const Icon(Icons.location_on_outlined,
-                  size: 16, color: AppColors.textSecondary),
+              const Icon(
+                Icons.location_on_outlined,
+                size: 16,
+                color: AppColors.textSecondary,
+              ),
               const SizedBox(width: 4),
-              Text(plant.location!,
-                  style:
-                      const TextStyle(color: AppColors.textSecondary)),
+              Text(
+                plant.location!,
+                style: const TextStyle(color: AppColors.textSecondary),
+              ),
             ],
           ),
         ],
@@ -396,9 +404,7 @@ class _CareChips extends StatelessWidget {
       children: [
         _NextCareChip(
           icon: Icons.water_drop_outlined,
-          label: waterDays <= 0
-              ? 'Regar hoje!'
-              : 'Rega em ${waterDays}d',
+          label: waterDays <= 0 ? 'Regar hoje!' : 'Rega em ${waterDays}d',
           color: waterDays <= 0 ? AppColors.error : Colors.blue,
         ),
         _NextCareChip(
@@ -406,9 +412,7 @@ class _CareChips extends StatelessWidget {
           label: fertilizeDays <= 0
               ? 'Adubar hoje!'
               : 'Adubação em ${fertilizeDays}d',
-          color: fertilizeDays <= 0
-              ? AppColors.error
-              : AppColors.primaryLight,
+          color: fertilizeDays <= 0 ? AppColors.error : AppColors.primaryLight,
         ),
       ],
     );
@@ -420,8 +424,11 @@ class _NextCareChip extends StatelessWidget {
   final String label;
   final Color color;
 
-  const _NextCareChip(
-      {required this.icon, required this.label, required this.color});
+  const _NextCareChip({
+    required this.icon,
+    required this.label,
+    required this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -437,9 +444,14 @@ class _NextCareChip extends StatelessWidget {
         children: [
           Icon(icon, size: 16, color: color),
           const SizedBox(width: 6),
-          Text(label,
-              style: TextStyle(
-                  color: color, fontWeight: FontWeight.w600, fontSize: 13)),
+          Text(
+            label,
+            style: TextStyle(
+              color: color,
+              fontWeight: FontWeight.w600,
+              fontSize: 13,
+            ),
+          ),
         ],
       ),
     );
@@ -466,15 +478,19 @@ class _CareTipsSection extends StatelessWidget {
           children: [
             const Row(
               children: [
-                Icon(Icons.tips_and_updates_outlined,
-                    size: 16, color: AppColors.primary),
+                Icon(
+                  Icons.tips_and_updates_outlined,
+                  size: 16,
+                  color: AppColors.primary,
+                ),
                 SizedBox(width: 6),
                 Text(
                   'Dicas de cuidado',
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primary,
-                      fontSize: 13),
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
+                    fontSize: 13,
+                  ),
                 ),
               ],
             ),
@@ -482,9 +498,10 @@ class _CareTipsSection extends StatelessWidget {
             Text(
               tips,
               style: const TextStyle(
-                  fontSize: 13,
-                  color: AppColors.textSecondary,
-                  height: 1.6),
+                fontSize: 13,
+                color: AppColors.textSecondary,
+                height: 1.6,
+              ),
             ),
           ],
         ),
@@ -503,26 +520,29 @@ class _RecentCareLogs extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(AppStrings.careHistory,
-            style: Theme.of(context)
-                .textTheme
-                .titleMedium
-                ?.copyWith(fontWeight: FontWeight.bold)),
+        Text(
+          AppStrings.careHistory,
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 12),
         logsAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (e, _) =>
-              Text(e.toString(), style: const TextStyle(color: AppColors.error)),
+          error: (e, _) => Text(
+            e.toString(),
+            style: const TextStyle(color: AppColors.error),
+          ),
           data: (logs) {
             final recent = logs.take(10).toList();
             if (recent.isEmpty) {
-              return const Text('Nenhum cuidado registrado ainda.',
-                  style: TextStyle(color: AppColors.textSecondary));
+              return const Text(
+                'Nenhum cuidado registrado ainda.',
+                style: TextStyle(color: AppColors.textSecondary),
+              );
             }
             return Column(
-              children: recent
-                  .map((log) => _LogTile(log: log))
-                  .toList(),
+              children: recent.map((log) => _LogTile(log: log)).toList(),
             );
           },
         ),
@@ -548,17 +568,25 @@ class _LogTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(DateHelper.formatWithTime(log.loggedAt),
-                    style: const TextStyle(
-                        fontSize: 13, color: AppColors.textSecondary)),
+                Text(
+                  DateHelper.formatWithTime(log.loggedAt),
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
                 if (log.note != null && log.note!.isNotEmpty)
                   Text(log.note!, style: const TextStyle(fontSize: 13)),
               ],
             ),
           ),
-          Text(DateHelper.timeAgo(log.loggedAt),
-              style: const TextStyle(
-                  fontSize: 11, color: AppColors.textSecondary)),
+          Text(
+            DateHelper.timeAgo(log.loggedAt),
+            style: const TextStyle(
+              fontSize: 11,
+              color: AppColors.textSecondary,
+            ),
+          ),
         ],
       ),
     );
@@ -590,7 +618,9 @@ class _RegisterCareModalState extends ConsumerState<_RegisterCareModal> {
     try {
       final user = await ref.read(authNotifierProvider.future);
       if (user == null) return;
-      await ref.read(careLogNotifierProvider(widget.plant.id).notifier).addLog(
+      await ref
+          .read(careLogNotifierProvider(widget.plant.id).notifier)
+          .addLog(
             CareLog(
               id: const Uuid().v4(),
               plantId: widget.plant.id,
@@ -626,35 +656,39 @@ class _RegisterCareModalState extends ConsumerState<_RegisterCareModal> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(AppStrings.registerCare,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(fontWeight: FontWeight.bold)),
+          Text(
+            AppStrings.registerCare,
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 20),
           SegmentedButton<CareType>(
             segments: const [
               ButtonSegment(
-                  value: CareType.water,
-                  label: Text('Rega'),
-                  icon: Icon(Icons.water_drop_outlined)),
+                value: CareType.water,
+                label: Text('Rega'),
+                icon: Icon(Icons.water_drop_outlined),
+              ),
               ButtonSegment(
-                  value: CareType.fertilize,
-                  label: Text('Adubação'),
-                  icon: Icon(Icons.eco_outlined)),
+                value: CareType.fertilize,
+                label: Text('Adubação'),
+                icon: Icon(Icons.eco_outlined),
+              ),
               ButtonSegment(
-                  value: CareType.repot,
-                  label: Text('Transplante'),
-                  icon: Icon(Icons.move_up)),
+                value: CareType.repot,
+                label: Text('Transplante'),
+                icon: Icon(Icons.move_up),
+              ),
             ],
             selected: {_selected},
-            onSelectionChanged: (s) =>
-                setState(() => _selected = s.first),
+            onSelectionChanged: (s) => setState(() => _selected = s.first),
             style: ButtonStyle(
-              iconColor: WidgetStateProperty.resolveWith((states) =>
-                  states.contains(WidgetState.selected)
-                      ? AppColors.primary
-                      : null),
+              iconColor: WidgetStateProperty.resolveWith(
+                (states) => states.contains(WidgetState.selected)
+                    ? AppColors.primary
+                    : null,
+              ),
             ),
           ),
           const SizedBox(height: 16),
@@ -674,7 +708,9 @@ class _RegisterCareModalState extends ConsumerState<_RegisterCareModal> {
                     width: 20,
                     height: 20,
                     child: CircularProgressIndicator(
-                        strokeWidth: 2, color: Colors.white),
+                      strokeWidth: 2,
+                      color: Colors.white,
+                    ),
                   )
                 : const Text('Salvar'),
           ),
@@ -683,8 +719,6 @@ class _RegisterCareModalState extends ConsumerState<_RegisterCareModal> {
     );
   }
 }
-
-// ─── Modal de nota para evolução ──────────────────────────────────────────
 
 class _GrowthNoteModal extends StatefulWidget {
   const _GrowthNoteModal();

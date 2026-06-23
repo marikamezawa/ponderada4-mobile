@@ -36,8 +36,10 @@ class _CareLogScreenState extends ConsumerState<CareLogScreen> {
       body: logsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(
-          child: Text(e.toString(),
-              style: const TextStyle(color: AppColors.error)),
+          child: Text(
+            e.toString(),
+            style: const TextStyle(color: AppColors.error),
+          ),
         ),
         data: (logs) {
           final filtered = _filter == null
@@ -93,14 +95,16 @@ class _FilterBar extends StatelessWidget {
             onTap: () => onChanged(null),
           ),
           const SizedBox(width: 8),
-          ...CareType.values.map((t) => Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: _FilterChip(
-                  label: t.label,
-                  selected: selected == t,
-                  onTap: () => onChanged(selected == t ? null : t),
-                ),
-              )),
+          ...CareType.values.map(
+            (t) => Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: _FilterChip(
+                label: t.label,
+                selected: selected == t,
+                onTap: () => onChanged(selected == t ? null : t),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -112,8 +116,11 @@ class _FilterChip extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
 
-  const _FilterChip(
-      {required this.label, required this.selected, required this.onTap});
+  const _FilterChip({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -160,8 +167,7 @@ class _CareLogTile extends StatelessWidget {
                   ),
                   if (log.note != null && log.note!.isNotEmpty) ...[
                     const SizedBox(height: 4),
-                    Text(log.note!,
-                        style: const TextStyle(fontSize: 13)),
+                    Text(log.note!, style: const TextStyle(fontSize: 13)),
                   ],
                 ],
               ),
@@ -169,7 +175,9 @@ class _CareLogTile extends StatelessWidget {
             Text(
               DateHelper.timeAgo(log.loggedAt),
               style: const TextStyle(
-                  fontSize: 11, color: AppColors.textSecondary),
+                fontSize: 11,
+                color: AppColors.textSecondary,
+              ),
             ),
           ],
         ),

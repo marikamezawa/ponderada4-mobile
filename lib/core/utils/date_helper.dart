@@ -6,8 +6,7 @@ class DateHelper {
 
   static String formatDisplay(DateTime date) => _displayFormat.format(date);
 
-  static String formatWithTime(DateTime date) =>
-      _displayWithTime.format(date);
+  static String formatWithTime(DateTime date) => _displayWithTime.format(date);
 
   static String timeAgo(DateTime date) {
     final diff = DateTime.now().difference(date);
@@ -17,16 +16,5 @@ class DateHelper {
     return 'agora';
   }
 
-  static DateTime nextCareDate(DateTime? lastCare, int frequencyDays) {
-    final base = lastCare ?? DateTime.now();
-    return base.add(Duration(days: frequencyDays));
-  }
-
-  static bool isOverdue(DateTime? lastCare, int frequencyDays) {
-    if (lastCare == null) return true;
-    return DateTime.now().isAfter(nextCareDate(lastCare, frequencyDays));
-  }
-
-  static int daysUntil(DateTime date) =>
-      date.difference(DateTime.now()).inDays;
+  static int daysUntil(DateTime date) => date.difference(DateTime.now()).inDays;
 }

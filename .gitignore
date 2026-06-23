@@ -1,62 +1,45 @@
-# Miscellaneous
-*.class
-*.log
-*.pyc
-*.swp
-.DS_Store
-.atom/
-.build/
-.buildlog/
-.history
-.svn/
-.swiftpm/
-migrate_working_dir/
-
-# IntelliJ related
+# Editor e sistema
+.idea/
+.vscode/
 *.iml
 *.ipr
 *.iws
-.idea/
+*.swp
+.DS_Store
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
-
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
+# Flutter e Dart
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
-/build/
-/coverage/
+build/
+coverage/
+**/doc/api/
 
-# Arquivos gerados pelo Flutter — não commitar
+# Configuração local e segredos
+.env
+.env.*
+lib/core/constants/env.dart
+android/local.properties
+android/key.properties
+*.jks
+*.keystore
+
+# Artefatos de build
+*.class
+*.log
+*.symbols
+*.map.json
+android/app/debug/
+android/app/profile/
+android/app/release/
+ios/Flutter/.last_build_id
 ios/Flutter/Generated.xcconfig
 ios/Flutter/flutter_export_environment.sh
 ios/Flutter/ephemeral/
 
-# Paths locais de SDK — específicos de cada máquina
-android/local.properties
-
-# Symbolication related
-app.*.symbols
-
-# Obfuscation related
-app.*.map.json
-
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
-
-# Variáveis de ambiente / chaves de API
-lib/core/constants/env.dart
-
-# Plataformas não utilizadas neste projeto
+# Plataformas não geradas para este projeto
 macos/
-windows/
 web/
+windows/

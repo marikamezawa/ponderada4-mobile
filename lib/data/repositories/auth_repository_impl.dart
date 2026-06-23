@@ -20,7 +20,10 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<UserProfile> register(
-      String name, String email, String password) async {
+    String name,
+    String email,
+    String password,
+  ) async {
     final user = await _datasource.register(name, email, password);
     authState.value = true;
     _controller.add(user);

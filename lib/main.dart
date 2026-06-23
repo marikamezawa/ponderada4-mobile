@@ -13,10 +13,8 @@ import 'data/datasources/local_database.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Carrega nomes e formatos de data usados nas telas em português.
   await initializeDateFormatting('pt_BR');
 
-  // Desktop (Linux/Windows/macOS) precisa do FFI para o SQLite
   if (!kIsWeb &&
       (defaultTargetPlatform == TargetPlatform.linux ||
           defaultTargetPlatform == TargetPlatform.windows ||
@@ -25,14 +23,14 @@ Future<void> main() async {
     databaseFactory = databaseFactoryFfi;
   }
 
-  // Abre o banco SQLite (cria o schema se for a primeira execução)
   await LocalDatabase.instance.database;
 
-  // Restaura sessão de login entre reinicializações
   final currentUser = await LocalAuthDatasource().getCurrentUser();
   authState.value = currentUser != null;
 
-  await NotificationService().initialize();
+  final notificationService = NotificationService();
+  await notificationService.initialize();
+  await notificationService.requestPermission();
 
   runApp(const ProviderScope(child: ReggieApp()));
 }

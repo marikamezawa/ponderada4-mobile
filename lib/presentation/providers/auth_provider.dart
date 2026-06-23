@@ -37,5 +37,6 @@ class AuthNotifier extends AsyncNotifier<UserProfile?> {
   }
 }
 
-final authNotifierProvider =
-    AsyncNotifierProvider<AuthNotifier, UserProfile?>(() => AuthNotifier());
+final authNotifierProvider = AsyncNotifierProvider<AuthNotifier, UserProfile?>(
+  () => AuthNotifier(),
+);

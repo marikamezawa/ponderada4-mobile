@@ -26,6 +26,10 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>O ReggieApp usa a câmera para fotografar e identificar plantas.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>O ReggieApp acessa a galeria para selecionar fotos de plantas.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

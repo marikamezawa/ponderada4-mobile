@@ -151,26 +151,6 @@ O desenvolvimento e os testes deste projeto foram realizados em um PC com Window
 
 ---
 
-## Checklist da Atividade Ponderada
-
-| Requisito | Como foi atendido | Status |
-|---|---|---|
-| Aplicação mobile (Flutter) | Desenvolvido inteiramente em Flutter | ✅ |
-| Mais de duas telas | 11 telas implementadas | ✅ |
-| Navegação funcional | GoRouter com rotas nomeadas | ✅ |
-| Banco de dados | SQLite local via sqflite (plantas, usuários, cuidados, crescimento) | ✅ |
-| Autenticação | Login e cadastro locais com senha hasheada (SHA256) — sem backend externo | ✅ |
-| API externa | API de identificação de plantas + Gemini API | ✅ |
-| Sistema de notificações | flutter_local_notifications com agendamento periódico automático | ✅ |
-| Compartilhamento | share_plus com share nativo do sistema operacional | ✅ |
-| Uso de hardware | Câmera via image_picker com permissão em runtime (câmera + galeria no dispositivo físico) | ✅ |
-| Interface organizada | Material 3 com paleta verde e tipografia consistente | ✅ |
-| Tratamento de erros | Estados de loading, erro e sucesso em todas as chamadas de API | ✅ |
-| Documentação | Este README | ✅ |
-| Vídeo demonstrativo | Gravado com emulador Android, fluxo principal demonstrado | ✅ |
-| Repositório público | Disponível no GitHub | ✅ |
-
-
 # Vídeo de Demonstração
 
 Para acessar o vídeo, [clique aqui](https://drive.google.com/file/d/1mu59ofS0r8arzginfSEj3R0bpyMqXiHf/view?usp=sharing)
